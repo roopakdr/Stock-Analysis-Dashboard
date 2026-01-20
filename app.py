@@ -274,7 +274,7 @@ def format_ratio(num):
     return f"{num:.2f}"
 
 # --- Main App ---
-st.title("📊 Advanced Stock Analysis Dashboard")
+st.title("Stock Analysis Dashboard")
 st.markdown("---")
 
 # --- Sidebar ---
@@ -336,7 +336,7 @@ if ticker:
             )
         
         # --- Tabs ---
-        tab1, tab2, tab3, tab4 = st.tabs(["📈 Price Chart", "📊 Technical Analysis", "📑 Fundamentals", "📰 News & Research"])
+        tab1, tab2, tab3, tab4 = st.tabs(["Price Chart", "Technical Analysis", "Fundamentals", "News & Research"])
         
         # --- Tab 1: Price Chart ---
         with tab1:
@@ -451,7 +451,7 @@ if ticker:
         
         # --- Tab 2: Technical Analysis ---
         with tab2:
-            st.subheader("📊 Technical Indicators")
+            st.subheader("Technical Indicators")
             
             # RSI
             if 'RSI' in data.columns:
@@ -550,18 +550,18 @@ if ticker:
                     else:
                         technical_signals.append(f"🔴 Price below 200-day SMA (${sma200:.2f}) - Long-term downtrend")
                 else:
-                    technical_signals.append("⚠️ Insufficient data for 200-day SMA analysis")
+                    technical_signals.append("Insufficient data for 200-day SMA analysis")
             
             for signal in technical_signals:
                 st.write(signal)
         
         # --- Tab 3: Fundamentals ---
         with tab3:
-            st.subheader("📑 Fundamental Analysis")
+            st.subheader("Fundamental Analysis")
             
             if stock_info:
                 # Company Overview
-                st.write("### 🏢 Company Overview")
+                st.write("### Company Overview")
                 col1, col2 = st.columns(2)
                 
                 with col1:
@@ -578,11 +578,11 @@ if ticker:
                 
                 # Business Summary
                 if stock_info.get('longBusinessSummary'):
-                    st.write("### 📝 Business Summary")
+                    st.write("### Business Summary")
                     st.write(stock_info['longBusinessSummary'][:500] + "..." if len(stock_info['longBusinessSummary']) > 500 else stock_info['longBusinessSummary'])
                 
                 # Financial Metrics
-                st.write("### 💰 Key Financial Metrics")
+                st.write("### Key Financial Metrics")
                 metrics = get_financial_metrics(stock_info)
                 
                 # Organize metrics into categories
@@ -628,20 +628,20 @@ if ticker:
                 col1, col2 = st.columns(2)
                 
                 with col1:
-                    st.write("#### 💸 Valuation Metrics")
+                    st.write("#### Valuation Metrics")
                     for key, value in valuation_metrics.items():
                         st.write(f"**{key}:** {value}")
                     
-                    st.write("#### 💪 Financial Health")
+                    st.write("#### Financial Health")
                     for key, value in financial_health.items():
                         st.write(f"**{key}:** {value}")
                 
                 with col2:
-                    st.write("#### 📈 Profitability Metrics")
+                    st.write("#### Profitability Metrics")
                     for key, value in profitability_metrics.items():
                         st.write(f"**{key}:** {value}")
                     
-                    st.write("#### 📊 Share Information")
+                    st.write("#### Share Information")
                     for key, value in share_info.items():
                         st.write(f"**{key}:** {value}")
             else:
@@ -660,7 +660,7 @@ if ticker:
                     st.warning(f"Unable to fetch news at this time: {str(e)}")
             
             if news_articles:
-                st.write(f"### 🗞️ Recent Headlines for {ticker} ({len(news_articles)} articles found)")
+                st.write(f"### Recent Headlines for {ticker} ({len(news_articles)} articles found)")
                 
                 # Display articles
                 for i, article in enumerate(news_articles, 1):
@@ -673,24 +673,24 @@ if ticker:
                         col1, col2 = st.columns([3, 1])
                         
                         with col1:
-                            st.markdown(f"**📰 Title:** {title}")
-                            st.markdown(f"**📺 Publisher:** {article.get('publisher', 'Unknown')}")
-                            st.markdown(f"**📅 Published:** {article.get('published', 'Unknown date')}")
+                            st.markdown(f"**Title:** {title}")
+                            st.markdown(f"**Publisher:** {article.get('publisher', 'Unknown')}")
+                            st.markdown(f"**Published:** {article.get('published', 'Unknown date')}")
                             
                             # Show summary if available
                             summary = article.get('summary', '').strip()
                             if summary:
-                                st.markdown(f"**📝 Summary:** {summary}")
+                                st.markdown(f"**Summary:** {summary}")
                         
                         with col2:
                             link = article.get('link', '')
                             if link and link != "#" and link.startswith('http'):
-                                st.markdown(f"[📰 Read Full Article]({link})")
+                                st.markdown(f"[Read Full Article]({link})")
                             else:
                                 st.markdown("*Link unavailable*")
                 
                 # News Sentiment Analysis
-                st.write("### 📊 News Sentiment Analysis")
+                st.write("### News Sentiment Analysis")
                 
                 try:
                     avg_sentiment, sentiment_label, sentiment_breakdown = analyze_news_sentiment(news_articles)
@@ -761,25 +761,25 @@ if ticker:
                             st.plotly_chart(fig_sentiment, use_container_width=True)
                     
                     # Sentiment insights
-                    st.write("#### 💡 Sentiment Insights")
+                    st.write("#### Sentiment Insights")
                     if avg_sentiment > 0.5:
-                        st.success("📈 **Strong Positive Sentiment**: News coverage is overwhelmingly positive, which could indicate strong market confidence.")
+                        st.success("**Strong Positive Sentiment**: News coverage is overwhelmingly positive, which could indicate strong market confidence.")
                     elif avg_sentiment > 0:
-                        st.info("📊 **Mild Positive Sentiment**: News coverage leans positive, suggesting cautious optimism.")
+                        st.info("**Mild Positive Sentiment**: News coverage leans positive, suggesting cautious optimism.")
                     elif avg_sentiment < -0.5:
-                        st.error("📉 **Strong Negative Sentiment**: News coverage is predominantly negative, which may indicate market concerns.")
+                        st.error("**Strong Negative Sentiment**: News coverage is predominantly negative, which may indicate market concerns.")
                     elif avg_sentiment < 0:
-                        st.warning("⚠️ **Mild Negative Sentiment**: News coverage leans negative, suggesting some market caution.")
+                        st.warning("**Mild Negative Sentiment**: News coverage leans negative, suggesting some market caution.")
                     else:
-                        st.info("🎯 **Neutral Sentiment**: News coverage is balanced, indicating stable market perception.")
+                        st.info("**Neutral Sentiment**: News coverage is balanced, indicating stable market perception.")
                 
                 except Exception as e:
                     st.error(f"Error analyzing sentiment: {str(e)}")
                     
             else:
-                st.info(f"📰 No recent news articles found for {ticker}")
+                st.info(f"No recent news articles found for {ticker}")
                 
-                st.write("### 🔗 External News Sources")
+                st.write("### External News Sources")
                 st.markdown("Try checking these financial news sources for the latest updates:")
                 
                 # Create clickable links to external sources
@@ -787,24 +787,24 @@ if ticker:
                 
                 with col1:
                     st.markdown(f"**Yahoo Finance**")
-                    st.markdown(f"[📊 Quote](https://finance.yahoo.com/quote/{ticker}/)")
-                    st.markdown(f"[📰 News](https://finance.yahoo.com/quote/{ticker}/news/)")
-                    st.markdown(f"[📈 Charts](https://finance.yahoo.com/quote/{ticker}/chart/)")
+                    st.markdown(f"[Quote](https://finance.yahoo.com/quote/{ticker}/)")
+                    st.markdown(f"[News](https://finance.yahoo.com/quote/{ticker}/news/)")
+                    st.markdown(f"[Charts](https://finance.yahoo.com/quote/{ticker}/chart/)")
                 
                 with col2:
                     st.markdown(f"**Google Finance**")
-                    st.markdown(f"[📊 Overview](https://www.google.com/finance/quote/{ticker}:NASDAQ)")
+                    st.markdown(f"[Overview](https://www.google.com/finance/quote/{ticker}:NASDAQ)")
                     st.markdown(f"**SEC Filings**")
-                    st.markdown(f"[📋 EDGAR](https://www.sec.gov/cgi-bin/browse-edgar?CIK={ticker})")
+                    st.markdown(f"[EDGAR](https://www.sec.gov/cgi-bin/browse-edgar?CIK={ticker})")
                 
                 with col3:
                     st.markdown(f"**Other Sources**")
-                    st.markdown(f"[📊 MarketWatch](https://www.marketwatch.com/investing/stock/{ticker.lower()})")
-                    st.markdown(f"[🔍 Seeking Alpha](https://seekingalpha.com/symbol/{ticker})")
-                    st.markdown(f"[📈 Finviz](https://finviz.com/quote.ashx?t={ticker})")
+                    st.markdown(f"[MarketWatch](https://www.marketwatch.com/investing/stock/{ticker.lower()})")
+                    st.markdown(f"[Seeking Alpha](https://seekingalpha.com/symbol/{ticker})")
+                    st.markdown(f"[Finviz](https://finviz.com/quote.ashx?t={ticker})")
             
             # Market Analysis Section
-            st.write("### 📈 Quick Market Analysis")
+            st.write("### Quick Market Analysis")
             
             try:
                 # Calculate market statistics
@@ -835,7 +835,7 @@ if ticker:
                         st.metric("Max Drawdown", f"{max_drawdown:.1f}%")
                     
                     # Risk Assessment
-                    st.write("#### 🎯 Risk Assessment")
+                    st.write("#### Risk Assessment")
                     
                     risk_factors = []
                     
@@ -868,7 +868,7 @@ if ticker:
                     historical_volume = data['Volume'].mean()
                     volume_ratio = recent_volume / historical_volume if historical_volume != 0 else 1
                     
-                    st.write("#### 📊 Volume Analysis")
+                    st.write("#### Volume Analysis")
                     if volume_ratio > 1.5:
                         st.write("🟢 **High Volume Activity**: Recent trading volume is significantly above average")
                     elif volume_ratio > 1.2:
@@ -885,21 +885,21 @@ if ticker:
                 st.error(f"Error calculating market analysis: {str(e)}")
     
     else:
-        st.error(f"❌ Unable to fetch data for ticker: {ticker}")
+        st.error(f"Unable to fetch data for ticker: {ticker}")
         st.info("Please check that the ticker symbol is correct and try again.")
 
 else:
     # Welcome screen
-    st.info("👋 Welcome to the Advanced Stock Analysis Dashboard!")
+    st.info("Welcome to the Stock Analysis Dashboard!")
     st.markdown("""
     **Getting Started:**
     1. Enter a stock ticker symbol in the sidebar (e.g., AAPL, MSFT, GOOGL)
     2. Select your preferred time period and chart type
     3. Explore the four main sections:
-       - 📈 **Price Chart**: Interactive price charts with technical indicators
-       - 📊 **Technical Analysis**: RSI, MACD, and other technical indicators
-       - 📑 **Fundamentals**: Company information and financial metrics
-       - 📰 **News & Research**: Latest news with sentiment analysis
+       - **Price Chart**: Interactive price charts with technical indicators
+       - **Technical Analysis**: RSI, MACD, and other technical indicators
+       - **Fundamentals**: Company information and financial metrics
+       - **News & Research**: Latest news with sentiment analysis
     
     **Features:**
     - Real-time stock data and news
@@ -910,7 +910,7 @@ else:
     """)
     
     # Show some example tickers
-    st.write("### 💡 Popular Tickers to Try:")
+    st.write("### Popular Tickers to Try:")
     example_tickers = ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA", "NVDA", "META", "NFLX"]
     
     cols = st.columns(4)
